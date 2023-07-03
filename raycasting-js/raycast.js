@@ -5,7 +5,7 @@ const MAP_NUM_COLS = 15;
 const WINDOW_WIDTH = MAP_NUM_COLS * TILE_SIZE;
 const WINDOW_HEIGHT = MAP_NUM_ROWS * TILE_SIZE;
 
-const FOV_ANGLE = 60 * (Math.PI / 180);
+const FOV_ANGLE = Math.PI / 3;
 
 const WALL_STRIP_WIDTH = 4;
 const NUM_RAYS = WINDOW_WIDTH / WALL_STRIP_WIDTH;
@@ -56,7 +56,7 @@ class Player {
         this.turnDirection = 0; // -1 if left, +1 if right
         this.walkDirection = 0; // -1 if back, +1 if front
         this.rotationAngle = Math.PI / 2;
-        this.moveSpeed = 5.0;
+        this.moveSpeed = 1.0;
         this.rotationSpeed = Math.PI / 90;
     }
     update() {
@@ -92,7 +92,7 @@ class Ray {
         this.wallHitX = 0;
         this.wallHitY = 0;
         this.distance = 0;
-        this.wasHitVertical = false;
+        // this.wasHitVertical = false;
 
         this.isRayFacingDown = this.rayAngle > 0 && this.rayAngle < Math.PI;
         this.isRayFacingUp = !this.isRayFacingDown;
@@ -198,7 +198,7 @@ class Ray {
         this.wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
         this.wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
         this.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
-        this.wasHitVertical = (vertHitDistance < horzHitDistance);
+        // this.wasHitVertical = (vertHitDistance < horzHitDistance);
     }
     render() {
         stroke("rgba(100, 120, 130, 0.3)");
@@ -289,5 +289,4 @@ function draw() {
         ray.render();
     }
     player.render();
-
 }
