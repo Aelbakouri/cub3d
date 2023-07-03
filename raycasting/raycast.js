@@ -7,7 +7,7 @@ const WINDOW_HEIGHT = MAP_NUM_ROWS * TILE_SIZE;
 
 const FOV_ANGLE = 60 * (Math.PI / 180);
 
-const WALL_STRIP_WIDTH = 1;
+const WALL_STRIP_WIDTH = 10;
 const NUM_RAYS = WINDOW_WIDTH / WALL_STRIP_WIDTH;
 
 class Map {
@@ -56,7 +56,7 @@ class Player {
         this.turnDirection = 0; // -1 if left, +1 if right
         this.walkDirection = 0; // -1 if back, +1 if front
         this.rotationAngle = Math.PI / 2;
-        this.moveSpeed = 2.0;
+        this.moveSpeed = 5.0;
         this.rotationSpeed = 2 * (Math.PI / 180);
     }
     update() {
@@ -201,7 +201,7 @@ class Ray {
         this.wasHitVertical = (vertHitDistance < horzHitDistance);
     }
     render() {
-        stroke("rgba(255, 0, 0, 0.3)");
+        stroke("rgba(100, 120, 130, 0.3)");
         line(
             player.x,
             player.y,
