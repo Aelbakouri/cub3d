@@ -7,7 +7,7 @@ const WINDOW_HEIGHT = MAP_NUM_ROWS * TILE_SIZE;
 
 const FOV_ANGLE = 60 * (Math.PI / 180);
 
-const WALL_STRIP_WIDTH = 1;
+const WALL_STRIP_WIDTH = 10;
 const NUM_RAYS = WINDOW_WIDTH / WALL_STRIP_WIDTH;
 
 const MINIMAP_SCALE_FACTOR = 0.2;
@@ -226,6 +226,7 @@ var grid = new Map();
 var player = new Player();
 var rays = [];
 
+
 function keyPressed() {
     if (keyCode == UP_ARROW) {
         player.walkDirection = +1;
@@ -275,14 +276,16 @@ function render3DProjectedWalls() {
     for (var i = 0; i < NUM_RAYS; i++) {
         var ray = rays[i];
 
-        var rayDistance = ray.distance;
+        // get the perpendicular distance to the wall to fix fishbowl distortion
+        var correctWallDistance = ray.distance * Math.cos(ray.rayAngle - player.rotationAngle);
 
         // calculate the distance to the projection plane
         var distanceProjectionPlane = (WINDOW_WIDTH / 2) / Math.tan(FOV_ANGLE / 2);
 
         // projected wall height
-        var wallStripHeight = (TILE_SIZE / rayDistance) * distanceProjectionPlane;
+        var wallStripHeight = (TILE_SIZE / correctWallDistance) * distanceProjectionPlane;
 
+        // render a rectangle with the calculated wall height
         fill("rgba(255, 255, 255, 1.0)");
         noStroke();
         rect(
@@ -316,7 +319,7 @@ function update() {
 }
 
 function draw() {
-    clear("#212121");
+    clear("#111");
     update();
 
     render3DProjectedWalls();
