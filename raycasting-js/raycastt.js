@@ -76,10 +76,12 @@ class Player {
     }
     update() {
         this.rotationAngle += this.turnDirection * this.rotationSpeed;
+
         var moveStep = this.walkDirection * this.moveSpeed;
+
         var newPlayerX = this.x + Math.cos(this.rotationAngle) * moveStep;
         var newPlayerY = this.y + Math.sin(this.rotationAngle) * moveStep;
-        console.log(Math.floor(newPlayerX), Math.floor(newPlayerY))
+
         if (!grid.hasWallAt(newPlayerX, newPlayerY)) {
             this.x = newPlayerX;
             this.y = newPlayerY;
